@@ -38,18 +38,24 @@ class steamSearch(commands.Cog):
         bansdata = json.loads(bansRequest.text)['players'][0]
         userdata = json.loads(userRequest.text)["response"]['players'][0]
 
+        if userdata["communityvisibilitystate"] > 1:
+            userdata["timecreated"] = datetime.datetime.fromtimestamp(int(userdata["timecreated"])).strftime('%m-%d-%Y')
+        else:
+            userdata["timecreated"] = "Private Profile"
+
+
         #creates a discord embed containing the infomation from the requests using the newEmbed method from embed.py
         fm = newEmbed(title=f"Steam Profile Look Up",  #embed title 
         fields={  #embed fields
             "Steam Name": userdata['personaname'],
             "Steam Hex":"Steam:"+(hex(int(id))[2:]),
             "Steam ID":userdata['steamid'],
-            "realname":userdata['realname'] or "Unknown",
-            "Country":userdata['loccountrycode'] or "Unknown",
+            "realname": userdata.get('realname', 'Unknown'),
+            "Country": userdata.get('loccountrycode', 'Unknown'),
             "VAC Bans":bansdata['NumberOfVACBans'],
             "Game Bans":bansdata['NumberOfGameBans'],
             "Days Since Last Ban" : bansdata['DaysSinceLastBan'],
-            "Account Creation Date (M-D-Y)": datetime.datetime.fromtimestamp(int(userdata["timecreated"])).strftime('%m-%d-%Y') or "Unknown", #time of account create or Unknown if they have a private profile profile
+            "Account Creation Date (M-D-Y)": userdata["timecreated"] , #time of account create or Unknown if they have a private profile profile
             "Profile URL": f"[Click Here]({userdata['profileurl']})",
         },
         embedUrl=userdata['avatarfull'] #the profile picture of the user

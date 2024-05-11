@@ -54,7 +54,7 @@ python3 main.py
 
 ## Example
 
-![Example image](https://imgur.com/cmJgU7G.png)
+![Example image](https://imgur.com/Io7GOQP.png)
 
 
 ## Contributing
