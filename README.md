@@ -42,13 +42,13 @@ python3 main.py
 3. Use the following slash command /steam
  
  ```diff
- /steam Infinity_585
+ /steam steamid:Infinity_585
  ```
  ```diff
- /steam Steam:11000011656271c
+ /steam steamid:Steam:11000011656271c
  ```
  ```diff
- /steam 76561198335010588
+ /steam steamid:76561198335010588
  ```
 
 
