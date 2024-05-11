@@ -20,7 +20,7 @@ class steamSearch(commands.Cog):
     @app_commands.command(name = "steam", description = "Command to search for a steam profile")
     @app_commands.describe(steamid = "The steam 64, hex or vanity id of the user you want to search for")
     async def steamlookup(self, interaction : discord.Interaction, steamid : str):
-        id = self.getID(steamid) #Gets the steam 64 ID
+        id = await self.getID(steamid) #Gets the steam 64 ID
         if id == None: #If the ID is invalid, return an error message
             await interaction.response.send_message(f"Invalid or Unknown Steam Id ({steamid})", ephemeral=True)
             return
@@ -65,16 +65,16 @@ class steamSearch(commands.Cog):
     @param steamid : str the steam identifier of the user
     @return steamid : int steam 64 id of the user or None if the steam id is invalid
     '''
-    def getID(self, steamid):
+    async def getID(self, steamid):
         if re.match(r'^\d{17}$', steamid):
             return int(steamid)
         elif re.match(r'^steam:[A-Fa-f0-9]{15}$', steamid):
             id = (steamid[6:])
             return int(id,16)
         elif re.match(r'^[A-Za-z0-9_]+$', steamid):
-            id = self.getVanityURl(steamid)
+            id = await self.getVanityURl(steamid)
             if id != None: return id
-            id = self.getVanityURl(steamid[30:])
+            id = await self.getVanityURl(steamid[30:])
             return id
         return None
     
@@ -84,7 +84,7 @@ class steamSearch(commands.Cog):
     @param steamid : str the vanity id of the user
     @return steamid : int steam 64 id of the user or None if the vanity id is invalid
     '''
-    def getVanityURl(self, steamid):
+    async def getVanityURl(self, steamid):
         res = requests.get(f"http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={self.steamKey}&vanityurl={steamid}")
         vanitydata = json.loads(res.text)["response"]
         if vanitydata["success"] == 1:
@@ -95,4 +95,4 @@ class steamSearch(commands.Cog):
 
             
 async def setup(bot : commands.Bot):
-    bot.add_cog(steamSearch(bot))
+    await bot.add_cog(steamSearch(bot))
