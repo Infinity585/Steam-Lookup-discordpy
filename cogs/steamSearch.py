@@ -20,7 +20,7 @@ class steamSearch(commands.Cog):
     @app_commands.command(name = "steam", description = "Command to search for a steam profile")
     @app_commands.describe(steamid = "The steam 64, hex or vanity id of the user you want to search for")
     async def steamlookup(self, interaction : discord.Interaction, steamid : str):
-        id = await self.getID(steamid) #Gets the steam 64 ID
+        id = await self.getID(steamid.lower()) #Gets the steam 64 ID
         if id == None: #If the ID is invalid, return an error message
             await interaction.response.send_message(f"Invalid or Unknown Steam Id ({steamid})", ephemeral=True)
             return
