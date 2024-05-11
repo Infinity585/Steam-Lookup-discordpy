@@ -54,7 +54,7 @@ To run this project, you will need to add the following environment variables to
 
 ## Example
 
-![Example image](https://imgur.com/cmJgU7G)
+![Example image](https://imgur.com/cmJgU7G.png)
 
 
 ## Contributing
