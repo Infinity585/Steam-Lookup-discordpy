@@ -37,7 +37,7 @@ To run this project, you will need to add the following environment variables to
 
 2. Start the bot by running:
 ```bash
-    python3 main.py
+python3 main.py
  ```
 3. Use the following slash command /steam
  
